@@ -45,6 +45,10 @@ containers:
     args: ["--configsvr","--replSet","cfgRS","--port","27019","--bind_ip_all"]
     ports: [{ name: cfg, port: 27019, protocol: TCP }]
     volume_mounts: [{ name: cfg1-data, path: /data/db }]
+    probes:
+      readiness:
+        - name: tcp-ready
+          tcp_port: 27019
     wait_for: []
 
   - name: sharda1
@@ -52,6 +56,10 @@ containers:
     args: ["--shardsvr","--replSet","shardA","--port","27018","--bind_ip_all"]
     ports: [{ name: sharda, port: 27018, protocol: TCP }]
     volume_mounts: [{ name: sharda1-data, path: /data/db }]
+    probes:
+      readiness:
+        - name: tcp-ready
+          tcp_port: 27018
     wait_for: [cfg1]
 
   - name: sharda2
@@ -59,6 +67,10 @@ containers:
     args: ["--shardsvr","--replSet","shardA","--port","27018","--bind_ip_all"]
     ports: [{ name: sharda2, port: 27018, protocol: TCP }]
     volume_mounts: [{ name: sharda2-data, path: /data/db }]
+    probes:
+      readiness:
+        - name: tcp-ready
+          tcp_port: 27018
     wait_for: [cfg1]
 
   - name: sharda3
@@ -66,6 +78,10 @@ containers:
     args: ["--shardsvr","--replSet","shardA","--port","27018","--bind_ip_all"]
     ports: [{ name: sharda3, port: 27018, protocol: TCP }]
     volume_mounts: [{ name: sharda3-data, path: /data/db }]
+    probes:
+      readiness:
+        - name: tcp-ready
+          tcp_port: 27018
     wait_for: [cfg1]
 
   - name: shardb1
@@ -73,6 +89,10 @@ containers:
     args: ["--shardsvr","--replSet","shardB","--port","27018","--bind_ip_all"]
     ports: [{ name: shardb, port: 27018, protocol: TCP }]
     volume_mounts: [{ name: shardb1-data, path: /data/db }]
+    probes:
+      readiness:
+        - name: tcp-ready
+          tcp_port: 27018
     wait_for: [cfg1]
 
   - name: shardb2
@@ -80,6 +100,10 @@ containers:
     args: ["--shardsvr","--replSet","shardB","--port","27018","--bind_ip_all"]
     ports: [{ name: shardb2, port: 27018, protocol: TCP }]
     volume_mounts: [{ name: shardb2-data, path: /data/db }]
+    probes:
+      readiness:
+        - name: tcp-ready
+          tcp_port: 27018
     wait_for: [cfg1]
 
   - name: shardb3
@@ -87,12 +111,20 @@ containers:
     args: ["--shardsvr","--replSet","shardB","--port","27018","--bind_ip_all"]
     ports: [{ name: shardb3, port: 27018, protocol: TCP }]
     volume_mounts: [{ name: shardb3-data, path: /data/db }]
+    probes:
+      readiness:
+        - name: tcp-ready
+          tcp_port: 27018
     wait_for: [cfg1]
 
   - name: mongos
     image: mongo:7.0
     args: ["mongos","--configdb","cfgRS/cfg1:27019","--bind_ip_all","--port","27017"]
     ports: [{ name: mongos, port: 27017, protocol: TCP }]
+    probes:
+      readiness:
+        - name: tcp-ready
+          tcp_port: 27017
     wait_for: [cfg1, sharda1, sharda2, sharda3, shardb1, shardb2, shardb3]
 
 resources:
