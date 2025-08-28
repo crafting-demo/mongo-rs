@@ -41,16 +41,16 @@ This repository demonstrates a fully sharded MongoDB topology with replica sets 
     2) `shardA` and `shardB` replica sets each have a PRIMARY and at least one SECONDARY.
     3) `demo.users` is sharded in the config metadata (not dropped).
     4) `demo.users` has data (count > 0).
-  - Also prints a non-fatal summary of chunk ownership across shards from `config.chunks`.
+  - Also prints a summary of chunk ownership across shards from `config.chunks`.
   - Usage examples:
     - In the workspace root (where this repo is checked out):
       ```bash
-      bash resume-check.sh
+      ./resume-check.sh
       ```
     - With an explicit URI or a custom `mongosh` binary:
       ```bash
-      MONGODB_URI="mongodb://mongos:27017/admin" bash resume-check.sh
-      MONGOSH_BIN="/home/owner/bin/mongosh" bash resume-check.sh
+      MONGODB_URI="mongodb://mongos:27017/admin" ./resume-check.sh
+      MONGOSH_BIN="/home/owner/bin/mongosh" ./resume-check.sh
       ```
 
 ### Startup ordering and orchestration strategy
@@ -79,13 +79,13 @@ For detailed schema and concepts used here, see the Crafting documentation for t
 3. Verify the cluster:
    ```bash
    cd ~/repo/mongo-rs
-   bash resume-check.sh
+   ./resume-check.sh
    ```
 4. Suspend the sandbox from the WebConsole or CLI. After some time, resume it.
 5. Verify again after resume:
    ```bash
    cd ~/repo/mongo-rs
-   bash resume-check.sh
+   ./resume-check.sh
    ```
 
 ### Troubleshooting
